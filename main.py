@@ -14,10 +14,14 @@ Example:
 """
 
 import argparse
+import datetime as dt
 import logging
 
+import numpy as np
+import pygame
 from ehc_sn.control import ManualControl
 
+import config
 import maps
 
 parser = argparse.ArgumentParser(prog=__doc__)
@@ -60,11 +64,26 @@ def main(args):
     logger.debug("Log level set to: %s", log_level)
 
     # get the map environment
+    logger.info("Getting map environment: %s", map_name)
     map_env = maps.get_map(map_name, render_mode="human")
 
     # enable manual control for testing
-    manual_control = ManualControl(map_env, seed=42)
-    manual_control.start()
+    try:
+        logger.info("Starting manual control")
+        manual_control = ManualControl(map_env, seed=42)
+        manual_control.start()
+    except pygame.error as error:
+        logger.error("Pygame error: %s", error)
+    finally:
+        logger.info("Closing map environment")
+        map_env.close()
+
+    # save trajectories to a file
+    logger.info("Saving environment to a file")
+    timestamp = dt.datetime.now().strftime("%Y%m%d%H%M%S")
+    file_name = f"{config.DATA_PATH}/episodes_{timestamp}.npy"
+    episodes = np.array(map_env.trajectories, dtype=object)
+    np.save(file_name, episodes, allow_pickle=True)
 
 
 if __name__ == "__main__":
