@@ -1,0 +1,3 @@
+[submodule "ehc-sn"]
+	path = ehc-sn
+	url = git@github.com:BorjaEst/ehc-sn.git
