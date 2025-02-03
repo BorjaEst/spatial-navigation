@@ -38,6 +38,12 @@ parser.add_argument(
     default="INFO",
     help="Set the logging level",
 )
+parser.add_argument(
+    "--output-file",
+    type=str,
+    default=None,
+    help="Output file name for saving trajectories",
+)
 
 
 def main(args):
@@ -49,12 +55,15 @@ def main(args):
             map (str): The map name for the navigation.
             log_level (str): The logging level to be set 7
                 (e.g., 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL').
+            output_file (str): The output file name for saving trajectories.
 
     Returns:
         None
     """
+    timestamp = dt.datetime.now().strftime("%Y%m%d%H%M%S")
     map_name = args.map
     log_level = args.log_level
+    output_file = args.output_file or f"episodes_{timestamp}.npy"
 
     logging.basicConfig(level=getattr(logging, log_level))
 
@@ -78,12 +87,14 @@ def main(args):
         logger.info("Closing map environment")
         map_env.close()
 
+    # Collect and transform trajectories to episodes
+    logger.info("Collecting trajectories")
+    episodes = np.array(map_env.trajectories, dtype=object)
+
     # save trajectories to a file
     logger.info("Saving environment to a file")
-    timestamp = dt.datetime.now().strftime("%Y%m%d%H%M%S")
-    file_name = f"{config.DATA_PATH}/episodes_{timestamp}.npy"
-    episodes = np.array(map_env.trajectories, dtype=object)
-    np.save(file_name, episodes, allow_pickle=True)
+    output_path = f"{config.DATA_PATH}/{output_file}"
+    np.save(output_path, episodes, allow_pickle=True)
 
 
 if __name__ == "__main__":
