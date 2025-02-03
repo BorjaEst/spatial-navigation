@@ -1,35 +1,5 @@
 """
 This module defines an example map for a spatial navigation environment.
-
-Classes:
-    Settings: Configuration settings for the environment.
-
-Functions:
-    example_map(env, grid, width, height): Generates an example map with walls, a goal, and an agent.
-
-Settings:
-    grid_size (int): Size of the grid.
-    max_steps (int): Maximum number of steps.
-    see_through_walls (bool): Whether the agent can see through walls.
-    agent_view_size (int): Size of the agent's view.
-    render_mode (str): Default rendering mode.
-    screen_size (int): Size of the screen.
-    highlight (bool): Whether to highlight the agent.
-    agent_pov (bool): Whether to use the agent's point of view.
-
-example_map:
-    Args:
-        env (Environment): The environment instance.
-        grid (Grid): The grid instance.
-        width (int): The width of the grid.
-        height (int): The height of the grid.
-
-    Generates:
-        - Surrounding walls around the grid.
-        - A vertical separation wall in the middle of the grid.
-        - A goal square in the bottom-right corner.
-        - Places the agent at position (1, 1) facing direction 0.
-
 """
 
 from ehc_sn.environment import Environment, Goal, BaseSettings, Wall
@@ -77,7 +47,7 @@ def example_map(env, grid, width, height):
     1. Generates the surrounding walls of the map.
     2. Generates a vertical separation wall at x-coordinate 5.
     3. Places a goal square in the bottom-right corner of the map.
-    4. Places the agent at the starting position (1, 1) facing right (direction 0).
+    4. Places the agent at the starting position (1, 1), direction 0.
     """
 
     # Generate the surrounding walls
