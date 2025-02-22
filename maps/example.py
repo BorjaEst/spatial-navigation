@@ -2,8 +2,9 @@
 This module defines an example map for a spatial navigation environment.
 """
 
-from ehc_sn.environment import Environment, Goal, BaseSettings, Wall
 import dataclasses as dc
+
+from tools.environment import BaseSettings, Environment, Goal, Wall
 
 
 @dc.dataclass
