@@ -4,7 +4,11 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
-        "minigrid"
+        "cmap",
+        "figsize",
+        "imshow",
+        "minigrid",
+        "viridis"
     ],
     "ignoreWords": [],
     "import": []
