@@ -1,3 +1,6 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=invalid-name
+
 import datetime as dt
 import logging
 from typing import Literal
@@ -11,9 +14,6 @@ from rich.logging import RichHandler
 import config
 import maps
 from tools.control import ManualControl
-
-# pylint: disable=missing-module-docstring
-# pylint: disable=invalid-name
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
