@@ -4,4 +4,9 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "black-formatter.args": [
+        "--config=pyproject.toml"
+    ],
+    "flake8.enabled": false,
+    "pylint.enabled": true,
 }
