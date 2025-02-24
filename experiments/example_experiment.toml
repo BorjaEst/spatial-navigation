@@ -1,0 +1,22 @@
+[experiment]
+name = "example_experiment"
+
+[[block]]
+mace = "mace_1"
+trajectories = 20
+
+[[block]]
+mace = "mace_2"
+trajectories = 15
+
+[[block]]
+mace = "mace_3"
+trajectories = 25
+
+[[block]]
+mace = "mace_1"
+trajectories = 30
+
+[[block]]
+mace = "mace_2"
+trajectories = 10

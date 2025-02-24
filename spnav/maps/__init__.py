@@ -8,8 +8,8 @@ Functions:
     get_map(map_name, **options):
 """
 
-from maps.example import example_map
-from maps import baseline
+from spnav.maps.example import example_map
+from spnav.maps import baseline
 
 _maps = {
     "example": example_map,

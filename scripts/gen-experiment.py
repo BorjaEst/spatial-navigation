@@ -20,9 +20,10 @@ logger = logging.getLogger(__name__)
 
 class Arguments(BaseSettings):
     """
-    This script provides a command-line interface to produce navigation
-    sequences. It initializes the spatial navigation application using
-    minigrid environments on the specified map.
+    This script provides a command-line interface to produce a navigation
+    experiment. It uses an experiment configuration file to set the
+    environment and parameters to generate an output file with the
+    Experiment instance containing the trajectories and other information.
     """  # Description for the script help message
 
     # Class attributes
@@ -38,17 +39,18 @@ class Arguments(BaseSettings):
     )
 
     # Script-specific settings
-    map: str = Field(
-        description="Input map as a string, e.g., 'example_map'.",
+    experiment: str = Field(
+        description="Experiment TOML name from 'experiments' folder.",
+        examples=["example_experiment"],
     )
     output_file: str = Field(
-        default=f"episodes_{dt.datetime.now().strftime('%Y%m%d%H%M%S')}",
+        default=f"experiment_{dt.datetime.now().strftime('%Y%m%d%H%M%S')}",
         description="Output file name for saving trajectories.",
     )
 
 
 def main(args: Arguments):
-    """Main function to run the spatial navigation application."""
+    """Main function to generate the spatial navigation experiment."""
 
     # Set the logging level from the arguments
     logging.basicConfig(
@@ -63,27 +65,11 @@ def main(args: Arguments):
     output = config.data_path / f"{args.output_file}.npy"
 
     # get the map environment
-    logger.info("Preparing map environment: %s", args.map)
-    map_env = maps.get_map(args.map, render_mode="human")
+    experiment = None  # TODO: Generate the experiment
 
-    # enable manual control for testing
-    try:
-        logger.info("Starting manual control")
-        manual_control = ManualControl(map_env, seed=42)
-        manual_control.start()
-    except pygame.error as error:  # pylint: disable=no-member
-        logger.error("Pygame error: %s", error)
-    finally:
-        logger.info("Closing map environment")
-        map_env.close()
-
-    # Collect and transform trajectories to episodes
-    logger.info("Collecting trajectories")
-    episodes = np.array(map_env.trajectories, dtype=object)
-
-    # save trajectories to a file
+    # save experiment to a file
     logger.info("Saving environment to file %s", output)
-    np.save(output, episodes, allow_pickle=True)
+    np.save(output, experiment, allow_pickle=True)
 
 
 if __name__ == "__main__":

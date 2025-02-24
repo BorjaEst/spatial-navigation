@@ -4,7 +4,7 @@ This module defines an example map for a spatial navigation environment.
 
 import dataclasses as dc
 
-from tools.environment import BaseSettings, Environment, Goal, Wall
+from spnav.environment import BaseSettings, Environment, Goal, Wall
 
 
 @dc.dataclass
@@ -34,7 +34,22 @@ class Settings(BaseSettings):
 
 
 @Environment(defaults=Settings).map_generator("mission example")
-def map_1(env, grid, width, height):
+def example_map(env, grid, width, height):
+    """
+    Sets up an example map in the given environment.
+
+    Args:
+        env: The environment object where the map will be set up.
+        grid: The grid object representing the map layout.
+        width: The width of the map.
+        height: The height of the map.
+
+    The function performs the following steps:
+    1. Generates the surrounding walls of the map.
+    2. Generates a vertical separation wall at x-coordinate 5.
+    3. Places a goal square in the bottom-right corner of the map.
+    4. Places the agent at the starting position (1, 1), direction 0.
+    """
 
     # Generate the surrounding walls
     grid.wall_rect(0, 0, width, height)
@@ -42,24 +57,6 @@ def map_1(env, grid, width, height):
     # Generate vertical separation wall
     for i in range(1, height - 2):
         grid.set(5, i, Wall())
-
-    # Place a goal square in the bottom-right corner
-    env.put_obj(Goal(), width - 2, height - 2)
-
-    # Place the agent
-    env.agent_pos = (1, 1)
-    env.agent_dir = 0
-
-
-@Environment(defaults=Settings).map_generator("mission example")
-def map_2(env, grid, width, height):
-
-    # Generate the surrounding walls
-    grid.wall_rect(0, 0, width, height)
-
-    # Generate vertical separation wall
-    for i in range(1, width - 2):
-        grid.set(i, 3, Wall())
 
     # Place a goal square in the bottom-right corner
     env.put_obj(Goal(), width - 2, height - 2)
