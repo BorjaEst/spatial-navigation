@@ -3,16 +3,16 @@
 
 import datetime as dt
 import logging
+import pickle
 from typing import Literal
 
-import numpy as np
-import pygame
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
 
-from spnav import config, maps
-from spnav.control import ManualControl
+from spnav import Block, Experiment, config
+from spnav import control as controllers
+from spnav import maps
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
@@ -62,14 +62,41 @@ def main(args: Arguments):
     logger.debug("Call arguments: %s", args)
 
     # Prepare internal variables
-    output = config.data_path / f"{args.output_file}.npy"
+    out_path = config.data_path / f"{args.output_file}.npy"
+    exp_path = config.experiments / f"{args.experiment}.toml"
+
+    # Prepare the control for the experiment
+    logger.info("Setting up the control for the experiment")
+    control = controllers.ManualControl
+
+    # Load the experiment configuration
+    logger.info("Loading experiment configuration from file %s", exp_path)
+    exp_cfg = config.load_experiment(exp_path)
 
     # get the map environment
-    experiment = None  # TODO: Generate the experiment
+    logger.info("Preparing map environment: %s", exp_cfg["experiment"])
+    experiment = Experiment(
+        name=exp_cfg["experiment"]["name"],
+        blocks=[gen_blk(control, **kwds) for kwds in exp_cfg["block"]],
+    )
 
     # save experiment to a file
-    logger.info("Saving environment to file %s", output)
-    np.save(output, experiment, allow_pickle=True)
+    logger.info("Saving environment to file %s", out_path)
+    with open(out_path, "wb") as file:
+        pickle.dump(experiment, file)
+
+
+def gen_blk(ctrl, mace: str, trajectories: int) -> Block:
+    """Generate a block with the MACE and trajectories."""
+    mace_env = maps.get_map(mace, render_mode="human")
+
+    # Run the control for the trajectories in the MACE
+    for _ in range(trajectories):
+        ctrl(mace_env, seed=42).start()
+    mace_env.close()
+
+    # Return the block with the trajectories
+    return Block(episode=mace_env.trajectories, mace=mace)
 
 
 if __name__ == "__main__":
