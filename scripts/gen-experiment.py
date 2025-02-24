@@ -12,7 +12,7 @@ from rich.logging import RichHandler
 
 from spnav import Block, Experiment, config
 from spnav import control as controllers
-from spnav import maces
+from spnav import env
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
@@ -73,11 +73,17 @@ def main(args: Arguments):
     logger.info("Loading experiment configuration from file %s", exp_path)
     exp_cfg = config.load_experiment(exp_path)
 
+    # Generate settings for the experiment
+    logger.info("Generating settings for the experiment")
+    exp_settings = env.ExperimentSettings(**exp_cfg["experiment"])
+
     # get the map environment
     logger.info("Preparing map environment: %s", exp_cfg["experiment"])
     experiment = Experiment(
-        name=exp_cfg["experiment"]["name"],
-        blocks=[gen_blk(control, **kwds) for kwds in exp_cfg["block"]],
+        name=args.experiment,
+        blocks=[
+            gen_block(control, exp_settings, blk_kwds) for blk_kwds in exp_cfg["block"]
+        ],
     )
 
     # save experiment to a file
@@ -86,17 +92,16 @@ def main(args: Arguments):
         pickle.dump(experiment, file)
 
 
-def gen_blk(ctrl, mace: str, trajectories: int) -> Block:
+def gen_block(control, exp_settings: env.ExperimentSettings, blk_cfg) -> Block:
     """Generate a block with the MACE and trajectories."""
-    mace_env = maces.get_map(mace, render_mode="human")
+    env_settings = env.BlockSettings(**exp_settings.model_dump(), **blk_cfg)
+    mace_env = env.Mace(env_settings)
 
     # Run the control for the trajectories in the MACE
-    for _ in range(trajectories):
-        ctrl(mace_env, seed=42).start()
-    mace_env.close()
+    trajectories = mace_env.run(control)
 
     # Return the block with the trajectories
-    return Block(episode=mace_env.trajectories, mace=mace)
+    return Block(episode=trajectories)
 
 
 if __name__ == "__main__":

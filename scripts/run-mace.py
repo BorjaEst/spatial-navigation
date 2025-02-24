@@ -11,7 +11,7 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
 
-from spnav import config, maces
+from spnav import config, env
 from spnav.control import ManualControl
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
