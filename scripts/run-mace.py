@@ -64,22 +64,22 @@ def main(args: Arguments):
 
     # get the map environment
     logger.info("Preparing map environment: %s", args.map)
-    map_env = maps.get_map(args.map, render_mode="human")
+    mace_env = maps.get_map(args.map, render_mode="human")
 
     # enable manual control for testing
     try:
         logger.info("Starting manual control")
-        manual_control = ManualControl(map_env, seed=42)
+        manual_control = ManualControl(mace_env, seed=42)
         manual_control.start()
     except pygame.error as error:  # pylint: disable=no-member
         logger.error("Pygame error: %s", error)
     finally:
         logger.info("Closing map environment")
-        map_env.close()
+        mace_env.close()
 
     # Collect and transform trajectories to episodes
     logger.info("Collecting trajectories")
-    episodes = np.array(map_env.trajectories, dtype=object)
+    episodes = np.array(mace_env.trajectories, dtype=object)
 
     # save trajectories to a file
     logger.info("Saving environment to file %s", output)
