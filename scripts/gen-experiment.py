@@ -12,7 +12,7 @@ from rich.logging import RichHandler
 
 from spnav import Block, Experiment, config
 from spnav import control as controllers
-from spnav import maps
+from spnav import maces
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
@@ -88,7 +88,7 @@ def main(args: Arguments):
 
 def gen_blk(ctrl, mace: str, trajectories: int) -> Block:
     """Generate a block with the MACE and trajectories."""
-    mace_env = maps.get_map(mace, render_mode="human")
+    mace_env = maces.get_map(mace, render_mode="human")
 
     # Run the control for the trajectories in the MACE
     for _ in range(trajectories):

@@ -1,5 +1,5 @@
 """
-This module defines an example map for a spatial navigation environment.
+This module defines an example mace for a spatial navigation environment.
 """
 
 import dataclasses as dc
@@ -33,8 +33,8 @@ class Settings(BaseSettings):
     agent_pov: bool = False  # whether to use the agent's point of view
 
 
-@Environment(defaults=Settings).map_generator("mission example")
-def map_1(env, grid, width, height):
+@Environment(defaults=Settings).mace_generator("mission example")
+def mace_1(env, grid, width, height):
 
     # Generate the surrounding walls
     grid.wall_rect(0, 0, width, height)
@@ -51,8 +51,8 @@ def map_1(env, grid, width, height):
     env.agent_dir = 0
 
 
-@Environment(defaults=Settings).map_generator("mission example")
-def map_2(env, grid, width, height):
+@Environment(defaults=Settings).mace_generator("mission example")
+def mace_2(env, grid, width, height):
 
     # Generate the surrounding walls
     grid.wall_rect(0, 0, width, height)

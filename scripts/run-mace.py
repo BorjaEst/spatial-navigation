@@ -11,7 +11,7 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
 
-from spnav import config, maps
+from spnav import config, maces
 from spnav.control import ManualControl
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -64,7 +64,7 @@ def main(args: Arguments):
 
     # get the map environment
     logger.info("Preparing map environment: %s", args.map)
-    mace_env = maps.get_map(args.map, render_mode="human")
+    mace_env = maces.get_map(args.map, render_mode="human")
 
     # enable manual control for testing
     try:

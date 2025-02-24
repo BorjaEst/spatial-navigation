@@ -9,7 +9,7 @@ Classes:
 Usage:
     - Define environment settings using the `BaseSettings` dataclass.
     - Create an `Environment` instance with the default settings.
-    - Use the `map_generator` method to generate environments.
+    - Use the `mace_generator` method to generate environments.
 """
 
 import dataclasses as dc
@@ -53,8 +53,8 @@ class Environment:
     def __init__(self, defaults: Type[BaseSettings]):
         self.defaults = defaults
 
-    def map_generator(self, name: str):
-        """Generates a map environment based on the given name."""
+    def mace_generator(self, name: str):
+        """Generates a mace environment based on the given name."""
         return EnvironGen(name, self.defaults)
 
 

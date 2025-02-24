@@ -1,5 +1,5 @@
 """
-This module defines an example map for a spatial navigation environment.
+This module defines an example mace for a spatial navigation environment.
 """
 
 import dataclasses as dc
@@ -33,21 +33,21 @@ class Settings(BaseSettings):
     agent_pov: bool = False  # whether to use the agent's point of view
 
 
-@Environment(defaults=Settings).map_generator("mission example")
-def example_map(env, grid, width, height):
+@Environment(defaults=Settings).mace_generator("mission example")
+def example_mace(env, grid, width, height):
     """
-    Sets up an example map in the given environment.
+    Sets up an example mace in the given environment.
 
     Args:
-        env: The environment object where the map will be set up.
-        grid: The grid object representing the map layout.
-        width: The width of the map.
-        height: The height of the map.
+        env: The environment object where the mace will be set up.
+        grid: The grid object representing the mace layout.
+        width: The width of the mace.
+        height: The height of the mace.
 
     The function performs the following steps:
-    1. Generates the surrounding walls of the map.
+    1. Generates the surrounding walls of the mace.
     2. Generates a vertical separation wall at x-coordinate 5.
-    3. Places a goal square in the bottom-right corner of the map.
+    3. Places a goal square in the bottom-right corner of the mace.
     4. Places the agent at the starting position (1, 1), direction 0.
     """
 
