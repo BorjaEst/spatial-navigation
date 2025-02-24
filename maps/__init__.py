@@ -9,9 +9,12 @@ Functions:
 """
 
 from maps.example import example_map
+from maps import baseline
 
 _maps = {
     "example": example_map,
+    "baseline_1": baseline.map_1,
+    "baseline_2": baseline.map_2,
 }
 
 
