@@ -3,13 +3,13 @@
 
 import datetime as dt
 import logging
-import pickle
 from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
 
+import spnav
 from spnav import Experiment, config
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -60,7 +60,6 @@ def main(args: Arguments):
     logger.debug("Call arguments: %s", args)
 
     # Prepare internal variables
-    out_path = config.data_path / f"{args.output_file}.pickle"
     exp_path = config.experiments / f"{args.experiment}.toml"
 
     # Load the experiment configuration
@@ -74,9 +73,8 @@ def main(args: Arguments):
     logger.debug("Experiment object: %s", experiment)
 
     # Save experiment to a file
-    logger.info("Saving environment to file %s", out_path)
-    with open(out_path, "wb") as file:
-        pickle.dump(experiment, file)
+    logger.info("Saving environment to file %s", args.output_file)
+    spnav.save_experiment(experiment, args.output_file)
     logger.info("Experiment saved successfully.")
 
 

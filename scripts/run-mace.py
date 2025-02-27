@@ -3,7 +3,6 @@
 
 import datetime as dt
 import logging
-import pickle
 from typing import Literal
 
 from pydantic import Field
@@ -61,9 +60,6 @@ def main(args: Arguments):
 
     # Load dataset and tools from the arguments
     logger.debug("Call arguments: %s", args)
-
-    # Prepare internal variables
-    out_path = config.data_path / f"{args.output_file}.pickle"
     exp_path = config.experiments / f"{args.experiment}.toml"
 
     # Load the experiment configuration
@@ -83,9 +79,8 @@ def main(args: Arguments):
     logger.debug("Mace block object: %s", block)
 
     # Save trajectories to a file
-    logger.info("Saving environment to file %s", out_path)
-    with open(out_path, "wb") as file:
-        pickle.dump(block, file)
+    logger.info("Saving environment to file %s", args.output_file)
+    spnav.save_block(block, args.output_file)
     logger.debug("Environment saved successfully.")
 
 

@@ -9,6 +9,7 @@
         "imshow",
         "minigrid",
         "spnav",
+        "stoianov",
         "viridis"
     ],
     "ignoreWords": [],
