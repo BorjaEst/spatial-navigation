@@ -26,7 +26,7 @@ class ExperimentSettings(BaseSettings):
     height: Optional[PositiveInt] = Field(None, ge=1, le=20)
     max_steps: Optional[PositiveInt] = Field(None, ge=1)
     see_through_walls: bool = False
-    agent_view_size: Optional[PositiveInt] = Field(6, ge=1, le=20)
+    agent_view_size: Optional[PositiveInt] = Field(3, ge=1, le=20)
     render_mode: Optional[str] = Field(None)
     screen_size: Optional[int] = Field(None, ge=640, le=1000)
     highlight: bool = True
@@ -37,7 +37,7 @@ class BlockSettings(ExperimentSettings):
     """Defines the configuration settings for the block environment."""
 
     name: str = Field()
-    trajectories: PositiveInt = Field(5, ge=1)
+    n_trajectories: PositiveInt = Field(5, ge=1)
     walls: list[Location | Literal["random"]] = Field([])
     goals: list[Location | Literal["random"]] = Field(["random"])
     start: Location | Literal["random"] = Field("random")
@@ -83,6 +83,8 @@ class Mace(LoggerEnv, MiniGridEnv):
         self.walls = settings.walls
         self.goal_locations = settings.goals
         self.agent_start_pos = settings.start
+        self.n_trajectories = settings.n_trajectories
+        self.episode_count = 0
 
     @staticmethod
     def _mission():
@@ -114,9 +116,8 @@ class Mace(LoggerEnv, MiniGridEnv):
         else:
             self.agent_pos = self.agent_start_pos
 
-    def run(self, control, seed=42):
-        """Run the environment for a number of steps."""
-        for _ in range(self.trajectories):
-            control(self, seed=seed).start()
-        self.close()
-        return self.trajectories
+    def reset(self, **kwds):
+        if self.episode_count >= self.n_trajectories:
+            raise StopIteration("Maximum number of trajectories reached.")
+        self.episode_count += 1
+        return super().reset(**kwds)
