@@ -11,7 +11,7 @@ from minigrid.core.grid import Grid
 from minigrid.core.mission import MissionSpace
 from minigrid.core.world_object import Goal, Wall
 from minigrid.minigrid_env import MiniGridEnv
-from pydantic import Field, PositiveInt
+from pydantic import Field, PositiveInt, field_validator
 from pydantic_settings import BaseSettings
 
 # Type aliases
@@ -24,19 +24,25 @@ class ExperimentSettings(BaseSettings):
     grid_size: Optional[PositiveInt] = Field(None, ge=1, le=20)
     width: Optional[PositiveInt] = Field(None, ge=1, le=20)
     height: Optional[PositiveInt] = Field(None, ge=1, le=20)
-    max_steps: Optional[PositiveInt] = Field(None, ge=1)
+    max_steps: Optional[PositiveInt] = Field(100, ge=1)
     see_through_walls: bool = False
-    agent_view_size: Optional[PositiveInt] = Field(3, ge=1, le=20)
+    agent_view_size: Optional[PositiveInt] = Field(3, ge=3, le=20)
     render_mode: Optional[str] = Field(None)
-    screen_size: Optional[int] = Field(None, ge=640, le=1000)
+    screen_size: Optional[int] = Field(640, ge=640, le=1000)
     highlight: bool = True
     agent_pov: bool = False
+
+    @field_validator("agent_view_size")
+    @classmethod
+    def _validate_agent_view_size(cls, value: int):
+        if value % 2 != 1:
+            raise ValueError("Agent view size must be an odd number.")
+        return value
 
 
 class BlockSettings(ExperimentSettings):
     """Defines the configuration settings for the block environment."""
 
-    name: str = Field()
     n_trajectories: PositiveInt = Field(5, ge=1)
     walls: list[Location | Literal["random"]] = Field([])
     goals: list[Location | Literal["random"]] = Field(["random"])
@@ -77,9 +83,19 @@ class Mace(LoggerEnv, MiniGridEnv):
     """Represent an environment for spatial navigation."""
 
     def __init__(self, settings: BlockSettings):
-        mission_space = MissionSpace(mission_func=self._mission)
-        super().__init__(mission_space, **settings.model_dump())
-        self.mission_name: str = settings.name
+        super().__init__(
+            mission_space=MissionSpace(mission_func=self._mission),
+            grid_size=settings.grid_size,
+            width=settings.width,
+            height=settings.height,
+            max_steps=settings.max_steps,
+            see_through_walls=settings.see_through_walls,
+            agent_view_size=settings.agent_view_size,
+            render_mode=settings.render_mode,
+            screen_size=settings.screen_size,
+            highlight=settings.highlight,
+            agent_pov=settings.agent_pov,
+        )
         self.walls = settings.walls
         self.goal_locations = settings.goals
         self.agent_start_pos = settings.start
@@ -92,7 +108,8 @@ class Mace(LoggerEnv, MiniGridEnv):
 
     def _gen_grid(self, width, height):
         self.grid = Grid(width, height)  # Create a grid
-        self.gen_walls()  # Generate walls
+        self.grid.wall_rect(0, 0, width, height)  # Surroundings
+        self.gen_walls()  # Generate custom walls
         self.gen_goals()  # Generate goals
         self.gen_agent()  # Generate agent
 

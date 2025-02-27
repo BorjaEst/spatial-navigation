@@ -2,16 +2,23 @@
 grid_size         = 10      # Size of the grid
 max_steps         = 100     # Maximum number of steps
 see_through_walls = false   # Whether the agent can see through
-agent_view_size   = 1       # Size of the agent's view
+agent_view_size   = 3       # Size of the agent's view
 render_mode       = "human" # Default rendering mode as a humana
 screen_size       = 640     # Size of the screen
 highlight         = true    # Whether to highlight the agent
 agent_pov         = false   # Whether to use the agent's point of view
 
 
-[[block]]
-name         = "mace_1"
-trajectories = 20
-walls        = [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [8, 1], [9, 1], [10, 1], [10, 2], [10, 3], [10, 4], [10, 5], [10, 6], [10, 7], [10, 8], [10, 9], [10, 10], [9, 10], [8, 10], [7, 10], [6, 10], [5, 10], [4, 10], [3, 10], [2, 10], [1, 10], [1, 9], [1, 8], [1, 7], [1, 6]]
-start        = "random"
-goals        = ["random"]
+[blocks.mace_1]
+n_trajectories = 4
+walls          = [[1, 1], [1, 2], [3, 3], [1, 4], [1, 5]]
+start          = "random"
+goals          = ["random"]
+
+
+[blocks.mace_2]
+n_trajectories  = 7
+walls           = [[1, 1], [1, 2], [3, 3], [1, 4], [1, 5]]
+start           = "random"
+goals           = ["random"]
+agent_view_size = 1
