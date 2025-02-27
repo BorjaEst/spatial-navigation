@@ -5,7 +5,6 @@ import logging
 from typing import Any, Iterable
 
 import ehc_sn as ehc
-import pygame
 from ehc_sn import Episode
 from minigrid.manual_control import ManualControl
 
@@ -61,11 +60,8 @@ class Experiment:  # pylint: disable=too-few-public-methods
 
 def run_mace(env: Mace) -> list[Episode]:
     """Run the MACE environment with the manual control."""
-    # pylint: disable=no-member
     try:
         ManualControl(env).start()
-    except pygame.error as error:
-        logger.error("Pygame error: %s", error)
     except StopIteration:
         logger.info("End of the mace simulation")
     return env.episodes
