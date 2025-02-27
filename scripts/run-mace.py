@@ -12,7 +12,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
 
 from spnav import config
-from spnav import control as controllers
+from spnav import control
 from spnav import env
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -70,8 +70,8 @@ def main(args: Arguments):
 
     # Prepare the control for the experiment
     logger.info("Setting up the control for the experiment")
-    control = controllers.ManualControl
-    logger.debug("Control: %s", control)
+    controller = control.ManualControl
+    logger.debug("Control: %s", controller)
 
     # Load the experiment configuration
     logger.info("Loading experiment configuration from %s", exp_path)
@@ -93,9 +93,11 @@ def main(args: Arguments):
     # Run the environment with the control
     logger.info("Running mace environment")
     try:  # If user closes the window, catch the exception
-        mace_env.run(control)
+        controller(mace_env).start()
     except pygame.error as error:  # pylint: disable=no-member
         logger.error("Pygame error: %s", error)
+    except StopIteration:
+        logger.info("End of the mace simulation")
 
     # Collect and transform trajectories to episodes
     logger.info("Collecting trajectories")

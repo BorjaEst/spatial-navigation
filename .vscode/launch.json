@@ -21,7 +21,8 @@
             "module": "scripts.run-mace",
             "args": [
                 "--log_level=DEBUG",
-                "--map=example"
+                "--experiment=example_experiment",
+                "--block=mace_1"
             ]
         },
     ]
