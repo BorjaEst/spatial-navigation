@@ -1,0 +1,48 @@
+[experiment]
+grid_size         = 17      # Size of the grid
+max_steps         = 100     # Maximum number of steps
+see_through_walls = false   # Whether the agent can see through
+agent_view_size   = 3       # Size of the agent's view
+render_mode       = "human" # Default rendering mode as a humana
+screen_size       = 640     # Size of the screen
+highlight         = true    # Whether to highlight the agent
+agent_pov         = false   # Whether to use the agent's point of view
+
+
+[blocks.mace_1]
+walls          = [[8, 1], [8, 2], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8], [8, 9], [8, 10], [8, 11], [8, 12], [8, 14], [8, 15], [1, 8], [2, 8], [3, 8], [4, 8], [6, 8], [7, 8], [8, 8], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [15, 8]]
+n_trajectories = 2
+start          = "random"
+goals          = ["random"]
+
+
+[blocks.mace_2]
+n_trajectories  = 2
+walls           = [[8, 1], [8, 2], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8], [8, 9], [8, 10], [8, 11], [8, 12], [8, 14], [8, 15], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [7, 8], [8, 8], [9, 8], [10, 8], [12, 8], [13, 8], [14, 8], [15, 8]]
+start           = "random"
+goals           = ["random"]
+agent_view_size = 5
+
+
+[blocks.mace_3]
+n_trajectories  = 2
+walls           = [[5, 5], [5, 6], [5, 7], [5, 9], [5, 10], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [11, 10], [11, 9], [11, 8], [11, 7], [11, 6], [11, 5], [10, 5], [9, 5], [8, 5], [7, 5], [6, 5]]
+start           = "random"
+goals           = ["random"]
+agent_view_size = 5
+
+
+[blocks.mace_4]
+n_trajectories  = 2
+walls           = [[5, 5], [5, 6], [5, 7], [5, 8], [5, 9], [5, 10], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [11, 10], [11, 9], [11, 7], [11, 6], [11, 5], [10, 5], [9, 5], [8, 5], [7, 5], [6, 5]]
+start           = "random"
+goals           = ["random"]
+agent_view_size = 5
+
+
+[blocks.mace_5]
+n_trajectories  = 2
+walls           = [[8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 10], [8, 11], [8, 12], [8, 13], [8, 14], [8, 15], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [15, 8]]
+start           = "random"
+goals           = ["random"]
+agent_view_size = 5
