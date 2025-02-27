@@ -131,10 +131,3 @@ class Mace(LoggerEnv, MiniGridEnv):
             self.place_agent()
         else:
             self.agent_pos = self.agent_start_pos
-
-    def run(self, control, seed=42):
-        """Run the environment for a number of steps."""
-        for _ in range(self.n_trajectories):
-            control(self, seed=seed).start()
-        self.close()
-        return self.trajectories  # TODO: Return episode instance

@@ -9,4 +9,16 @@
     ],
     "flake8.enabled": false,
     "pylint.enabled": true,
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "evenBetterToml.formatter.columnWidth": 100,
+    "evenBetterToml.formatter.arrayAutoExpand": false,
+    "evenBetterToml.formatter.arrayAutoCollapse": true,
+    "evenBetterToml.formatter.alignEntries": true,
+    "evenBetterToml.formatter.alignComments": true,
+    "evenBetterToml.formatter.allowedBlankLines": 2,
+    "evenBetterToml.formatter.arrayTrailingComma": true,
+    "evenBetterToml.formatter.compactArrays": true,
+    "evenBetterToml.formatter.indentTables": true,
 }

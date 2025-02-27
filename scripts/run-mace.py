@@ -10,9 +10,10 @@ import pygame
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
-from spnav import control as controllers
 
-from spnav import config, env
+from spnav import config
+from spnav import control as controllers
+from spnav import env
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
