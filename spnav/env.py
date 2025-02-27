@@ -54,7 +54,7 @@ class LoggerEnv(MiniGridEnv, ABC):
 
     def __init__(self, *args, **kwds):
         super().__init__(*args, **kwds)
-        self.trajectories = []  # Collect all trajectories
+        self.episodes = []  # Collect all trajectories
         self.observations = None
 
     def step(self, action):
@@ -66,7 +66,7 @@ class LoggerEnv(MiniGridEnv, ABC):
     def reset(self, **kwds):
         if self.observations is not None:
             observations_arr = np.array(self.observations)
-            self.trajectories.append(observations_arr)
+            self.episodes.append(observations_arr)
         self.observations = []
         return super().reset(**kwds)
 
@@ -82,7 +82,7 @@ class LoggerEnv(MiniGridEnv, ABC):
 class Mace(LoggerEnv, MiniGridEnv):
     """Represent an environment for spatial navigation."""
 
-    def __init__(self, settings: BlockSettings):
+    def __init__(self, name: str, settings: BlockSettings):
         super().__init__(
             mission_space=MissionSpace(mission_func=self._mission),
             grid_size=settings.grid_size,
@@ -96,6 +96,7 @@ class Mace(LoggerEnv, MiniGridEnv):
             highlight=settings.highlight,
             agent_pov=settings.agent_pov,
         )
+        self.name = name  # Name of the environment
         self.walls = settings.walls
         self.goal_locations = settings.goals
         self.agent_start_pos = settings.start
