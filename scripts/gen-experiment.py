@@ -3,16 +3,16 @@
 
 import datetime as dt
 import logging
+import pickle
 from typing import Literal
 
-import numpy as np
-import pygame
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
-from spnav import control as controllers
 
-from spnav import config, env
+from spnav import Block, Experiment, config
+from spnav import control as controllers
+from spnav import env
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
@@ -20,9 +20,10 @@ logger = logging.getLogger(__name__)
 
 class Arguments(BaseSettings):
     """
-    This script provides a command-line interface to produce navigation
-    sequences. It initializes the spatial navigation application using
-    minigrid environments on the specified map.
+    This script provides a command-line interface to produce a navigation
+    experiment. It uses an experiment configuration file to set the
+    environment and parameters to generate an output file with the
+    Experiment instance containing the trajectories and other information.
     """  # Description for the script help message
 
     # Class attributes
@@ -36,14 +37,11 @@ class Arguments(BaseSettings):
         default="INFO",
         description="Set the logging level.",
     )
+
     # Script-specific settings
     experiment: str = Field(
         description="Experiment TOML name from 'experiments' folder.",
         examples=["example_experiment"],
-    )
-    block: str = Field(
-        description="Block name from the mace to use.",
-        examples=["mace_1"],
     )
     output_file: str = Field(
         default=f"experiment_{dt.datetime.now().strftime('%Y%m%d%H%M%S')}",
@@ -52,7 +50,7 @@ class Arguments(BaseSettings):
 
 
 def main(args: Arguments):
-    """Main function to run the spatial navigation application."""
+    """Main function to generate the spatial navigation experiment."""
 
     # Set the logging level from the arguments
     logging.basicConfig(
@@ -70,39 +68,40 @@ def main(args: Arguments):
     # Prepare the control for the experiment
     logger.info("Setting up the control for the experiment")
     control = controllers.ManualControl
-    logger.debug("Control: %s", control)
 
     # Load the experiment configuration
-    logger.info("Loading experiment configuration from %s", exp_path)
+    logger.info("Loading experiment configuration from file %s", exp_path)
     exp_cfg = config.load_experiment(exp_path)
+
+    # Generate settings for the experiment
+    logger.info("Generating settings for the experiment")
     exp_settings = env.ExperimentSettings(**exp_cfg["experiment"])
-    logger.debug("Experiment settings: %s", exp_settings)
 
-    # Generate settings for the map
-    logger.info("Generating settings from %s", args.block)
-    block_cfg = {**exp_cfg["experiment"], **exp_cfg["blocks"][args.block]}
-    block_settings = env.BlockSettings(**block_cfg)
-    logger.debug("Experiment settings: %s", block_settings)
+    # get the map environment
+    logger.info("Preparing map environment: %s", exp_cfg["experiment"])
+    experiment = Experiment(
+        name=args.experiment,
+        blocks=[
+            gen_block(control, exp_settings, blk_kwds) for blk_kwds in exp_cfg["block"]
+        ],
+    )
 
-    # Generate the mace environment
-    logger.info("Preparing mace environment: %s", args.block)
-    mace_env = env.Mace(block_settings)
-    logger.debug("Mace environment: %s", mace_env)
-
-    # Run the environment with the control
-    logger.info("Running mace environment")
-    try:  # If user closes the window, catch the exception
-        mace_env.run(control)
-    except pygame.error as error:  # pylint: disable=no-member
-        logger.error("Pygame error: %s", error)
-
-    # Collect and transform trajectories to episodes
-    logger.info("Collecting trajectories")
-    episodes = np.array(mace_env.trajectories, dtype=object)
-
-    # save trajectories to a file
+    # save experiment to a file
     logger.info("Saving environment to file %s", out_path)
-    np.save(out_path, episodes, allow_pickle=True)
+    with open(out_path, "wb") as file:
+        pickle.dump(experiment, file)
+
+
+def gen_block(control, exp_settings: env.ExperimentSettings, blk_cfg) -> Block:
+    """Generate a block with the MACE and trajectories."""
+    env_settings = env.BlockSettings(**exp_settings.model_dump(), **blk_cfg)
+    mace_env = env.Mace(env_settings)
+
+    # Run the control for the trajectories in the MACE
+    trajectories = mace_env.run(control)
+
+    # Return the block with the trajectories
+    return Block(episode=trajectories)
 
 
 if __name__ == "__main__":

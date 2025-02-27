@@ -1,0 +1,24 @@
+[experiment]
+grid_size         = 10      # Size of the grid
+max_steps         = 100     # Maximum number of steps
+see_through_walls = false   # Whether the agent can see through
+agent_view_size   = 3       # Size of the agent's view
+render_mode       = "human" # Default rendering mode as a humana
+screen_size       = 640     # Size of the screen
+highlight         = true    # Whether to highlight the agent
+agent_pov         = false   # Whether to use the agent's point of view
+
+
+[blocks.mace_1]
+n_trajectories = 4
+walls          = [[1, 1], [1, 2], [3, 3], [1, 4], [1, 5]]
+start          = "random"
+goals          = ["random"]
+
+
+[blocks.mace_2]
+n_trajectories  = 7
+walls           = [[1, 1], [1, 2], [3, 3], [1, 4], [1, 5]]
+start           = "random"
+goals           = ["random"]
+agent_view_size = 1
