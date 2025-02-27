@@ -3,17 +3,15 @@
 
 import datetime as dt
 import logging
+import pickle
 from typing import Literal
 
-import numpy as np
-import pygame
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
 
-from spnav import config
-from spnav import control
-from spnav import env
+import spnav
+from spnav import config, env
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
@@ -47,7 +45,7 @@ class Arguments(BaseSettings):
         examples=["mace_1"],
     )
     output_file: str = Field(
-        default=f"experiment_{dt.datetime.now().strftime('%Y%m%d%H%M%S')}",
+        default=f"block_{dt.datetime.now().strftime('%Y%m%d%H%M%S')}",
         description="Output file name for saving trajectories.",
     )
 
@@ -65,13 +63,8 @@ def main(args: Arguments):
     logger.debug("Call arguments: %s", args)
 
     # Prepare internal variables
-    out_path = config.data_path / f"{args.output_file}.npy"
+    out_path = config.data_path / f"{args.output_file}.pickle"
     exp_path = config.experiments / f"{args.experiment}.toml"
-
-    # Prepare the control for the experiment
-    logger.info("Setting up the control for the experiment")
-    controller = control.ManualControl
-    logger.debug("Control: %s", controller)
 
     # Load the experiment configuration
     logger.info("Loading experiment configuration from %s", exp_path)
@@ -81,31 +74,19 @@ def main(args: Arguments):
 
     # Generate settings for the map
     logger.info("Generating settings from %s", args.block)
-    block_cfg = {**exp_cfg["experiment"], **exp_cfg["blocks"][args.block]}
-    block_settings = env.BlockSettings(**block_cfg)
-    logger.debug("Experiment settings: %s", block_settings)
+    options = {**exp_cfg["experiment"], **exp_cfg["blocks"][args.block]}
+    logger.debug("Environment option: %s", options)
 
     # Generate the mace environment
     logger.info("Preparing mace environment: %s", args.block)
-    mace_env = env.Mace(block_settings)
-    logger.debug("Mace environment: %s", mace_env)
+    block = spnav.Block(name=args.block, **options)
+    logger.debug("Mace block object: %s", block)
 
-    # Run the environment with the control
-    logger.info("Running mace environment")
-    try:  # If user closes the window, catch the exception
-        controller(mace_env).start()
-    except pygame.error as error:  # pylint: disable=no-member
-        logger.error("Pygame error: %s", error)
-    except StopIteration:
-        logger.info("End of the mace simulation")
-
-    # Collect and transform trajectories to episodes
-    logger.info("Collecting trajectories")
-    episodes = np.array(mace_env.trajectories, dtype=object)
-
-    # save trajectories to a file
+    # Save trajectories to a file
     logger.info("Saving environment to file %s", out_path)
-    np.save(out_path, episodes, allow_pickle=True)
+    with open(out_path, "wb") as file:
+        pickle.dump(block, file)
+    logger.debug("Environment saved successfully.")
 
 
 if __name__ == "__main__":

@@ -10,15 +10,15 @@ agent_pov         = false   # Whether to use the agent's point of view
 
 
 [blocks.mace_1]
-n_trajectories = 4
+n_trajectories = 2
 walls          = [[1, 1], [1, 2], [3, 3], [1, 4], [1, 5]]
 start          = "random"
 goals          = ["random"]
 
 
 [blocks.mace_2]
-n_trajectories  = 7
-walls           = [[1, 1], [1, 2], [3, 3], [1, 4], [1, 5]]
+n_trajectories  = 4
+walls           = [[2, 2], [2, 3], [2, 4], [2, 5], [2, 6]]
 start           = "random"
 goals           = ["random"]
-agent_view_size = 1
+agent_view_size = 5

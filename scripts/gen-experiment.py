@@ -10,9 +10,7 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from rich.logging import RichHandler
 
-from spnav import Block, Experiment, config
-from spnav import control as controllers
-from spnav import env
+from spnav import Experiment, config
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
@@ -62,46 +60,24 @@ def main(args: Arguments):
     logger.debug("Call arguments: %s", args)
 
     # Prepare internal variables
-    out_path = config.data_path / f"{args.output_file}.npy"
+    out_path = config.data_path / f"{args.output_file}.pickle"
     exp_path = config.experiments / f"{args.experiment}.toml"
-
-    # Prepare the control for the experiment
-    logger.info("Setting up the control for the experiment")
-    control = controllers.ManualControl
 
     # Load the experiment configuration
     logger.info("Loading experiment configuration from file %s", exp_path)
     exp_cfg = config.load_experiment(exp_path)
+    logger.debug("Experiment configuration: %s", exp_cfg)
 
-    # Generate settings for the experiment
-    logger.info("Generating settings for the experiment")
-    exp_settings = env.ExperimentSettings(**exp_cfg["experiment"])
+    # Generate the experiment
+    logger.info("Generating the experiment")
+    experiment = Experiment(name=args.experiment, **exp_cfg)
+    logger.debug("Experiment object: %s", experiment)
 
-    # get the map environment
-    logger.info("Preparing map environment: %s", exp_cfg["experiment"])
-    experiment = Experiment(
-        name=args.experiment,
-        blocks=[
-            gen_block(control, exp_settings, blk_kwds) for blk_kwds in exp_cfg["block"]
-        ],
-    )
-
-    # save experiment to a file
+    # Save experiment to a file
     logger.info("Saving environment to file %s", out_path)
     with open(out_path, "wb") as file:
         pickle.dump(experiment, file)
-
-
-def gen_block(control, exp_settings: env.ExperimentSettings, blk_cfg) -> Block:
-    """Generate a block with the MACE and trajectories."""
-    env_settings = env.BlockSettings(**exp_settings.model_dump(), **blk_cfg)
-    mace_env = env.Mace(env_settings)
-
-    # Run the control for the trajectories in the MACE
-    trajectories = mace_env.run(control)
-
-    # Return the block with the trajectories
-    return Block(episode=trajectories)
+    logger.info("Experiment saved successfully.")
 
 
 if __name__ == "__main__":
