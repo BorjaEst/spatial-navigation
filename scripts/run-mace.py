@@ -6,17 +6,18 @@ import logging
 from typing import Literal
 
 from pydantic import Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import SettingsConfigDict
 from rich.logging import RichHandler
 
 import spnav
 from spnav import config, env
+from spnav.utils import BaseArguments
 
 LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 logger = logging.getLogger(__name__)
 
 
-class Arguments(BaseSettings):
+class Arguments(BaseArguments):
     """
     This script provides a command-line interface to produce navigation
     sequences. It initializes the spatial navigation application using
