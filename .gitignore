@@ -164,3 +164,4 @@ cython_debug/
 # Project related
 1-s2.0-S0301008222001150-main.pdf
 1-s2.0-S0301008222001150-mmc1.pdf
+MNIST/*
