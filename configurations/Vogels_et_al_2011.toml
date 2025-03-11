@@ -1,0 +1,33 @@
+[Populations]
+NE = 8000 # Size of excitatory population E
+NI = 2000 # Size of inhibitory population I
+
+[Connectivity]
+epsilon = 0.02 # Probability of any connection (EE,EI,IE,II)
+g       = 3    # (nS) Basic weight unit
+gE      = 3    # (nS) Weight of all excitatory synapses
+gamma   = 10   # Scaling factor for inhibitory weights
+gII     = 30   # Weight of inhibitory to inhibitory synapses (=γg¯)
+gIE     = 30   # Weight of inhibitory to excitatory synapses (= Wij × 30 nS)
+chi     = 5    # Potentiation factor of excitatory weights belonging to one or more patterns
+
+[NeuronModel]
+tau        = 20  # (ms) Membrane time constant
+teta       = 50  # (mV) Spiking threshold
+Vrest      = 60  # (mV) Resting potential
+VE         = 0   # (mV) Excitatory reversal potential
+VI         = 80  # (mV) Inhibitory reversal potential
+Ileak      = 10  # (nS) Leak conductance
+Ib         = 200 # (pA) Background current to each cell (unless stated otherwise)
+refractory = 5   # (ms) Absolute refractory period
+
+[SynapseModel]
+tauE = 5  # (ms) Decay constant of AMPA-type conductance
+tauI = 10 # (ms) Decay constant of GABA-type conductance
+
+[PlasticityModel]
+tauSTDP = 20   # (ms) Decay constant of (pre and post) synaptic trace
+eta     = 1e-4 # Learning rate
+alpha   = 0.12 # Presynaptic offset
+Wmin    = 0    # Minimum inhibitory synaptic weight
+Wmax    = 300  # Maximum inhibitory synaptic weight
