@@ -1,25 +1,26 @@
 [project]
-name = "spatial-navigation"
+name        = "spatial-navigation"
 description = "Spatial Navigation pro"
-authors = [{ name = "Borja Esteban", email = "boressan@outlook.com" }]
-license = { text = "Apache License 2.0" }
-keywords = ["Sequential Navigation", "Entorhinal–Hippocampal circuit"]
-readme = "README.md"
-dynamic = ["version", "dependencies"]
+authors     = [{ name = "Borja Esteban", email = "boressan@outlook.com" }]
+license     = { text = "Apache License 2.0" }
+keywords    = ["Sequential Navigation", "Entorhinal–Hippocampal circuit"]
+readme      = "README.md"
+dynamic     = ["version", "dependencies"]
 
-[project.urls]
-homepage = "https://github.com/BorjaEst/spatial-navigation"
-repository = "https://github.com/BorjaEst/spatial-navigation"
-issue_tracker = "https://github.com/BorjaEst/spatial-navigation/issues"
-source = "https://github.com/BorjaEst/spatial-navigation"
+    [project.urls]
+    homepage      = "https://github.com/BorjaEst/spatial-navigation"
+    repository    = "https://github.com/BorjaEst/spatial-navigation"
+    issue_tracker = "https://github.com/BorjaEst/spatial-navigation/issues"
+    source        = "https://github.com/BorjaEst/spatial-navigation"
 
 
 [tool.pylint.main]
-disable = ["non-ascii-name", "invalid-name"]
+disable         = ["non-ascii-name", "invalid-name"]
+max-line-length = 120
 
 [tool.mypy]
-plugins = "numpy.typing.mypy_plugin"
+plugins                = "numpy.typing.mypy_plugin"
 ignore_missing_imports = true
 
 [tool.black]
-line-length = 88
+line-length = 120

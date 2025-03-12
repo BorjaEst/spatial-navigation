@@ -4,15 +4,21 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
+        "AMPA",
         "cmap",
         "customise",
         "dotenv",
         "figsize",
+        "GABA",
         "imshow",
         "minigrid",
+        "Presynaptic",
         "spnav",
+        "stdp",
         "stoianov",
-        "viridis"
+        "teta",
+        "viridis",
+        "Vogels"
     ],
     "ignoreWords": [],
     "import": []

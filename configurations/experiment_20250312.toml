@@ -1,0 +1,37 @@
+[populations] # parameters of the populations
+n_exc = 80 # (int): size of excitatory population
+n_inh = 20 # (int): size of inhibitory population
+
+[excitatory] # parameters if the excitatory cell
+rho_reset = 2.0 # (ms): refractory state (count towards zero)
+    [excitatory.lif] # parameters of the LIF model
+    tau_syn_inv = 2.000 # (1/ms): inverse synaptic time constant
+    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
+    v_leak      = 0.000 # (mv): leak potential 
+    v_th        = -50.0 # (mv): threshold potential 
+    v_reset     = -60.0 # (mv): reset potential 
+
+
+[inhibitory] # parameters if the excitatory cell
+rho_reset = 2.0 # (ms): refractory state (count towards zero)
+    [inhibitory.lif] # parameters of the LIF model
+    tau_syn_inv = 1.000 # (1/ms): inverse synaptic time constant
+    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
+    v_leak      = 0.000 # (mv): leak potential 
+    v_th        = -50.0 # (mv): threshold potential 
+    v_reset     = -60.0 # (mv): reset potential 
+
+[connectivity]
+epsilon = 0.2 # probability of any connection (EE,EI,IE,II)
+g_ee    = 3   # (nS) weight of excitatory to excitatory synapses
+g_ei    = 3   # (nS) weight of excitatory to inhibitory synapses
+g_ii    = 30  # (nS) weight of inhibitory to inhibitory synapses
+g_ie    = 30  # (nS) weight of inhibitory to excitatory synapses
+chi     = 5   # potentiation factor of excitatory weights 
+
+[plasticity]
+tau_stdp = 20   # (ms) decay constant of (pre and post) synaptic trace
+eta      = 1e-4 # learning rate
+alpha    = 0.12 # presynaptic offset
+w_min    = 0    # minimum inhibitory synaptic weight
+w_max    = 300  # maximum inhibitory synaptic weight
