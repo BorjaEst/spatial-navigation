@@ -1,33 +1,34 @@
-[populations] # parameters of the populations
-n_exc = 80 # (int): size of excitatory population
-n_inh = 20 # (int): size of inhibitory population
-
-[excitatory] # parameters if the excitatory cell
-rho_reset = 2.0 # (ms): refractory state (count towards zero)
-    [excitatory.lif] # parameters of the LIF model
-    tau_syn_inv = 2.000 # (1/ms): inverse synaptic time constant
-    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
-    v_leak      = -60.0 # (mv): leak potential 
-    v_th        = -50.0 # (mv): threshold potential 
-    v_reset     = -60.0 # (mv): reset potential 
+# This is a TOML document. Configuration for the experiment
+# The configuration file is used to set the parameters of the simulation
 
 
-[inhibitory] # parameters if the excitatory cell
-rho_reset = 2.0 # (ms): refractory state (count towards zero)
-    [inhibitory.lif] # parameters of the LIF model
-    tau_syn_inv = 1.000 # (1/ms): inverse synaptic time constant
-    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
-    v_leak      = -60.0 # (mv): leak potential 
-    v_th        = -50.0 # (mv): threshold potential 
-    v_reset     = -60.0 # (mv): reset potential 
+[layers.excitatory] # parameters if the excitatory cell
+population       = 80    # (int): size of excitatory population
+cell.rho_reset   = 2.0   # (ms): refractory state (count towards zero)
+cell.tau_syn_inv = 2.000 # (1/ms): inverse synaptic time constant
+cell.tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
+cell.v_leak      = -60.0 # (mv): leak potential 
+cell.v_th        = -50.0 # (mv): threshold potential 
+cell.v_reset     = -60.0 # (mv): reset potential 
 
-[connectivity]
-epsilon = 0.2 # probability of any connection (EE,EI,IE,II)
-g_ee    = 3   # (nS) weight of excitatory to excitatory synapses
-g_ei    = 3   # (nS) weight of excitatory to inhibitory synapses
-g_ii    = 30  # (nS) weight of inhibitory to inhibitory synapses
-g_ie    = 30  # (nS) weight of inhibitory to excitatory synapses
-chi     = 5   # potentiation factor of excitatory weights 
+[layers.inhibitory] # parameters if the excitatory cell
+population       = 20    # (int): size of inhibitory population
+cell.rho_reset   = 2.0   # (ms): refractory state (count towards zero)
+cell.tau_syn_inv = 1.000 # (1/ms): inverse synaptic time constant
+cell.tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
+cell.v_leak      = -60.0 # (mv): leak potential 
+cell.v_th        = -50.0 # (mv): threshold potential 
+cell.v_reset     = -60.0 # (mv): reset potential 
+
+[synapses.excitatory] # parameters of the excitatory synapses
+epsilon      = 0.2 # probability of any connection (EE,EI,IE,II)
+w.excitatory = 3   # (nS) weight of excitatory to excitatory synapses
+w.inhibitory = 3   # (nS) weight of excitatory to inhibitory synapses
+
+[synapses.inhibitory] # parameters of the inhibitory synapses
+epsilon      = 0.2 # probability of any connection (EE,EI,IE,II)
+w.excitatory = 30  # (nS) weight of inhibitory to excitatory synapses
+w.inhibitory = 30  # (nS) weight of inhibitory to inhibitory synapses
 
 [plasticity]
 tau_stdp = 20   # (ms) decay constant of (pre and post) synaptic trace
