@@ -31,8 +31,11 @@ w.excitatory = 30  # (nS) weight of inhibitory to excitatory synapses
 w.inhibitory = 30  # (nS) weight of inhibitory to inhibitory synapses
 
 [plasticity]
-tau_stdp = 20   # (ms) decay constant of (pre and post) synaptic trace
-eta      = 1e-4 # learning rate
-alpha    = 0.12 # presynaptic offset
-w_min    = 0    # minimum inhibitory synaptic weight
-w_max    = 300  # maximum inhibitory synaptic weight
+a_pre        = 10.0 # Contribution of pre-synaptic spike to weight change
+a_post       = 1.0  # Contribution of post-synaptic spike to weight change
+tau_pre_inv  = 20   # (1/s) time constant of pre-synaptic spike trace
+tau_post_inv = 50   # (1/s) time constant of post-synaptic spike trace
+w_min        = 0    # minimum weight
+w_max        = 300  # maximum weight
+eta_plus     = 1e-3 # learning rate for potentiation
+eta_minus    = 1e-3 # learning rate for depression
