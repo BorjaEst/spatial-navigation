@@ -1,34 +1,33 @@
 # This is a TOML document. Configuration for the experiment
 # The configuration file is used to set the parameters of the simulation
 
-
 [layers.excitatory] # parameters if the excitatory cell
-population       = 800   # (int): size of excitatory population
-cell.rho_reset   = 2.0   # (ms): refractory state (count towards zero)
-cell.tau_syn_inv = 2.000 # (1/ms): inverse synaptic time constant
-cell.tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
+population       = 400   # (int): size of excitatory population
+cell.rho_reset   = 5     # refractory state (count towards zero)
+cell.tau_syn_inv = 0.200 # (1/ms): inverse synaptic time constant
+cell.tau_mem_inv = 0.050 # (1/ms): inverse membrane time constant
 cell.v_leak      = -60.0 # (mv): leak potential 
 cell.v_th        = -50.0 # (mv): threshold potential 
 cell.v_reset     = -60.0 # (mv): reset potential 
 
 [layers.inhibitory] # parameters if the excitatory cell
-population       = 200   # (int): size of inhibitory population
-cell.rho_reset   = 2.0   # (ms): refractory state (count towards zero)
-cell.tau_syn_inv = 1.000 # (1/ms): inverse synaptic time constant
+population       = 100   # (int): size of inhibitory population
+cell.rho_reset   = 5     # refractory state (count towards zero)
+cell.tau_syn_inv = 0.100 # (1/ms): inverse synaptic time constant
 cell.tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
 cell.v_leak      = -60.0 # (mv): leak potential 
 cell.v_th        = -50.0 # (mv): threshold potential 
 cell.v_reset     = -60.0 # (mv): reset potential 
 
 [synapses.excitatory] # parameters of the excitatory synapses
-epsilon      = 0.2 # probability of any connection (EE,EI,IE,II)
-w.excitatory = 3   # (nS) weight of excitatory to excitatory synapses
-w.inhibitory = 3   # (nS) weight of excitatory to inhibitory synapses
+epsilon      = 0.3 # probability of any connection (EE,EI,IE,II)
+w.excitatory = 3   # weight of excitatory to excitatory synapses
+w.inhibitory = 3   # weight of excitatory to inhibitory synapses
 
 [synapses.inhibitory] # parameters of the inhibitory synapses
-epsilon      = 0.2 # probability of any connection (EE,EI,IE,II)
-w.excitatory = 30  # (nS) weight of inhibitory to excitatory synapses
-w.inhibitory = 30  # (nS) weight of inhibitory to inhibitory synapses
+epsilon      = 0.3 # probability of any connection (EE,EI,IE,II)
+w.excitatory = 30  # weight of inhibitory to excitatory synapses
+w.inhibitory = 30  # weight of inhibitory to inhibitory synapses
 
 [plasticity]
 a_pre        = 10.0 # Contribution of pre-synaptic spike to weight change
