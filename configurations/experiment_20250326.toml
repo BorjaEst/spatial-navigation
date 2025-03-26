@@ -1,0 +1,39 @@
+# This is a TOML document. Configuration for the experiment
+# The configuration file is used to set the parameters of the simulation
+
+[layers.excitatory] # parameters if the excitatory cell
+population = 400  # (int): size of excitatory population
+input_size = 600  # (int): size of the input
+epsilon    = 0.02 # (%): probability of any connection
+
+    [layers.excitatory.cell] # parameters of the excitatory cell
+    rho_reset   = 5     # (steps): refractory state (count towards zero)
+    tau_syn_inv = 0.200 # (1/ms): inverse synaptic time constant
+    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
+    v_leak      = -60.0 # (mv): leak potential 
+    v_th        = -50.0 # (mv): threshold potential 
+    v_reset     = -60.0 # (mv): reset potential 
+
+    [layers.excitatory.stdp]
+    w_max  = 300  # maximum weight
+    a_pre  = 10.0 # Contribution of pre-synaptic spike to weight change
+    a_post = 10.0 # Contribution of post-synaptic spike to weight change
+
+
+[layers.inhibitory] # parameters if the excitatory cell
+population = 100  # (int): size of inhibitory population
+input_size = 500  # (int): size of the input
+epsilon    = 0.02 # (%): probability of any connection
+
+    [layers.inhibitory.cell] # parameters of the inhibitory cell
+    rho_reset   = 5     # (steps): refractory state (count towards zero)
+    tau_syn_inv = 0.100 # (1/ms): inverse synaptic time constant
+    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
+    v_leak      = -50.0 # (mv): leak potential 
+    v_th        = -50.0 # (mv): threshold potential 
+    v_reset     = -60.0 # (mv): reset potential 
+
+    [layers.inhibitory.stdp]
+    w_max  = 300  # maximum weight
+    a_pre  = 10.0 # Contribution of pre-synaptic spike to weight change
+    a_post = 10.0 # Contribution of post-synaptic spike to weight change
