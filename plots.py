@@ -33,4 +33,7 @@ def signal(output, title, figsize=(12, 8), **kwds):
 
     plt.ylabel("Firing Rate")
     plt.xlabel("Time")
+
+    plt.grid(axis="x", linestyle="--", alpha=0.5)
+    plt.tight_layout()
     plt.show()
