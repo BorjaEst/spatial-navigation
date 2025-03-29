@@ -39,15 +39,12 @@ def signal(output, title, figsize=(12, 8), **kwds):
     plt.show()
 
 
-def weights(weights, title, figsize=(12, 8), threshold=1e-3, **kwds):
+def weights(weights, title, figsize=(12, 8), **kwds):
     """Plot the weights."""
-
-    # Filter weights based on the threshold
-    filtered_weights = weights[np.abs(weights) > threshold]
 
     plt.figure(figsize=figsize)
     plt.title(title)
-    plt.hist(filtered_weights.flatten(), 50, range=[0, 20], **kwds)
+    plt.hist(weights.flatten(), 50, range=[0, 10], **kwds)
 
     plt.ylabel("Weight")
     plt.xlabel("Weight Value")
