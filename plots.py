@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def raster(spikes, title, figsize=(12, 8), **kwds):
+def raster(spikes, title, figsize=(12, 4), **kwds):
     """Plot the raster plot of the spikes."""
     num_time_steps, num_neurons = spikes.shape
     time_indices, neuron_indices = np.where(spikes == 1)
@@ -19,10 +19,9 @@ def raster(spikes, title, figsize=(12, 8), **kwds):
 
     plt.grid(axis="x", linestyle="--", alpha=0.5)
     plt.tight_layout()
-    plt.show()
 
 
-def signal(output, title, figsize=(12, 8), **kwds):
+def signal(output, title, figsize=(12, 4), **kwds):
     """Plot the signal output."""
     num_time_steps, _num_neurons = output.shape
     time_steps = np.arange(num_time_steps)
@@ -36,10 +35,9 @@ def signal(output, title, figsize=(12, 8), **kwds):
 
     plt.grid(axis="x", linestyle="--", alpha=0.5)
     plt.tight_layout()
-    plt.show()
 
 
-def weights(weights, title, figsize=(12, 8), **kwds):
+def weights(weights, title, figsize=(12, 4), **kwds):
     """Plot the weights."""
 
     plt.figure(figsize=figsize)
@@ -50,4 +48,3 @@ def weights(weights, title, figsize=(12, 8), **kwds):
     plt.xlabel("Weight Value")
 
     plt.tight_layout()
-    plt.show()
