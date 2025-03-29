@@ -19,7 +19,7 @@ disable         = ["non-ascii-name", "invalid-name"]
 max-line-length = 120
 
 [tool.mypy]
-plugins                = "numpy.typing.mypy_plugin"
+plugins                = ["numpy.typing.mypy_plugin", "pydantic.mypy"]
 ignore_missing_imports = true
 
 [tool.black]
