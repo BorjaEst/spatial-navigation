@@ -13,16 +13,19 @@ population = 80 # (int): size of excitatory population
     v_reset     = -60.0 # (mv): reset potential 
 
     [layers.excitatory.synapses.ampa] # parameters excitatory synapses
-    input_size = 120 # (int): number of excitatory layer inputs
-    epsilon    = 0.2 # (%): probability of any connection
-    stdp.w_max = 2   # maximum weight
+    input_size     = 80   # (int): number of excitatory layer inputs
+    epsilon        = 0.2  # (%): probability of any connection
+    stdp.w_max     = 2    # maximum weight
+    stdp.eta_plus  = 0.99 # learning rate for weight increase
+    stdp.eta_minus = 0.99 # learning rate for weight increase
 
     [layers.excitatory.synapses.gaba] # parameters inhibitory synapses
-    input_size    = 20   # (int): number of inhibitory layer inputs
-    epsilon       = 0.2  # (%): probability of any connection
-    init_value    = 4.0  # (int): initial weight of the connections
-    stdp.w_max    = 10   # maximum weight
-    stdp.eta_plus = 0.40 # learning rate for weight increase
+    input_size     = 20   # (int): number of inhibitory layer inputs
+    epsilon        = 0.2  # (%): probability of any connection
+    init_value     = 4.0  # (int): initial weight of the connections
+    stdp.w_max     = 10   # maximum weight
+    stdp.eta_plus  = 0.99 # learning rate for weight increase
+    stdp.eta_minus = 0.99 # learning rate for weight increase
 
 
 [layers.inhibitory] # parameters if the excitatory cell
@@ -37,11 +40,15 @@ population = 20 # (int): size of inhibitory population
     v_reset     = -60.0 # (mv): reset potential 
 
     [layers.inhibitory.synapses.ampa] # parameters excitatory synapses
-    input_size = 80  # (int): number of excitatory layer inputs
-    epsilon    = 0.2 # (%): probability of any connection
-    stdp.w_max = 2   # maximum weight
+    input_size     = 80   # (int): number of excitatory layer inputs
+    epsilon        = 0.2  # (%): probability of any connection
+    stdp.w_max     = 2    # maximum weight
+    stdp.eta_plus  = 0.99 # learning rate for weight increase
+    stdp.eta_minus = 0.99 # learning rate for weight increase
 
     [layers.inhibitory.synapses.gaba] # parameters inhibitory synapses
-    input_size = 20  # (int): number of inhibitory layer inputs
-    epsilon    = 0.2 # (%): probability of any connection
-    stdp.w_max = 10  # maximum weight
+    input_size     = 20   # (int): number of inhibitory layer inputs
+    epsilon        = 0.2  # (%): probability of any connection
+    stdp.w_max     = 10   # maximum weight
+    stdp.eta_plus  = 0.99 # learning rate for weight increase
+    stdp.eta_minus = 0.99 # learning rate for weight increase
