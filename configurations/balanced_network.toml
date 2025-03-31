@@ -2,53 +2,53 @@
 # The configuration file is used to set the parameters of the simulation
 
 [layers.excitatory] # parameters if the excitatory cell
-population = 80 # (int): size of excitatory population
+population = 800 # (int): size of excitatory population
 
     [layers.excitatory.cells] # parameters of the excitatory cell
-    rho_reset   = 5     # (steps): refractory state (count towards zero)
-    tau_syn_inv = 0.200 # (1/ms): inverse synaptic time constant
-    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
-    v_leak      = -45.0 # (mv): leak potential 
-    v_th        = -50.0 # (mv): threshold potential 
-    v_reset     = -60.0 # (mv): reset potential 
+    rho_reset   = 5      # (steps): refractory state (count towards zero)
+    tau_syn_inv = 10.000 # (1/ms): inverse synaptic time constant
+    tau_mem_inv = 4.000  # (1/ms): inverse membrane time constant
+    v_leak      = -40.0  # (mv): leak potential 
+    v_th        = -50.0  # (mv): threshold potential 
+    v_reset     = -60.0  # (mv): reset potential 
 
     [layers.excitatory.synapses.ampa] # parameters excitatory synapses
-    input_size     = 80   # (int): number of excitatory layer inputs
-    epsilon        = 0.2  # (%): probability of any connection
-    stdp.w_max     = 2    # maximum weight
+    input_size     = 800  # (int): number of excitatory layer inputs
+    epsilon        = 0.02 # (%): probability of any connection
+    stdp.w_max     = 10   # maximum weight
     stdp.eta_plus  = 0.99 # learning rate for weight increase
     stdp.eta_minus = 0.99 # learning rate for weight increase
 
     [layers.excitatory.synapses.gaba] # parameters inhibitory synapses
-    input_size     = 20   # (int): number of inhibitory layer inputs
-    epsilon        = 0.2  # (%): probability of any connection
-    init_value     = 4.0  # (int): initial weight of the connections
-    stdp.w_max     = 10   # maximum weight
+    input_size     = 200  # (int): number of inhibitory layer inputs
+    epsilon        = 0.02 # (%): probability of any connection
+    init_value     = 0.0  # (int): initial weight of the connections
+    stdp.w_max     = 40   # maximum weight
     stdp.eta_plus  = 0.99 # learning rate for weight increase
     stdp.eta_minus = 0.99 # learning rate for weight increase
 
 
 [layers.inhibitory] # parameters if the excitatory cell
-population = 20 # (int): size of inhibitory population
+population = 200 # (int): size of inhibitory population
 
     [layers.inhibitory.cells] # parameters of the inhibitory cell
-    rho_reset   = 5     # (steps): refractory state (count towards zero)
-    tau_syn_inv = 0.100 # (1/ms): inverse synaptic time constant
-    tau_mem_inv = 0.500 # (1/ms): inverse membrane time constant
-    v_leak      = -50.0 # (mv): leak potential 
-    v_th        = -50.0 # (mv): threshold potential 
-    v_reset     = -60.0 # (mv): reset potential 
+    rho_reset   = 5      # (steps): refractory state (count towards zero)
+    tau_syn_inv = 10.000 # (1/ms): inverse synaptic time constant
+    tau_mem_inv = 4.000  # (1/ms): inverse membrane time constant
+    v_leak      = -60.0  # (mv): leak potential 
+    v_th        = -50.0  # (mv): threshold potential 
+    v_reset     = -60.0  # (mv): reset potential 
 
     [layers.inhibitory.synapses.ampa] # parameters excitatory synapses
-    input_size     = 80   # (int): number of excitatory layer inputs
-    epsilon        = 0.2  # (%): probability of any connection
-    stdp.w_max     = 2    # maximum weight
+    input_size     = 800  # (int): number of excitatory layer inputs
+    epsilon        = 0.02 # (%): probability of any connection
+    stdp.w_max     = 10   # maximum weight
     stdp.eta_plus  = 0.99 # learning rate for weight increase
     stdp.eta_minus = 0.99 # learning rate for weight increase
 
     [layers.inhibitory.synapses.gaba] # parameters inhibitory synapses
-    input_size     = 20   # (int): number of inhibitory layer inputs
-    epsilon        = 0.2  # (%): probability of any connection
-    stdp.w_max     = 10   # maximum weight
+    input_size     = 200  # (int): number of inhibitory layer inputs
+    epsilon        = 0.02 # (%): probability of any connection
+    stdp.w_max     = 40   # maximum weight
     stdp.eta_plus  = 0.99 # learning rate for weight increase
     stdp.eta_minus = 0.99 # learning rate for weight increase
