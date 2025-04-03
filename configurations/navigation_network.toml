@@ -13,18 +13,16 @@ population = 800 # (int): size of mapping population
     v_reset     = -60.0 # (mv): reset potential 
 
     [layers.mapping.synapses.ampa] # parameters mapping synapses
-    input_size     = 1600 # (int): number of mapping layer inputs
-    epsilon        = 0.02 # (%): probability of any connection
-    stdp.w_max     = 10   # maximum weight
-    stdp.eta_plus  = 0.99 # learning rate for weight increase
-    stdp.eta_minus = 0.99 # learning rate for weight increase
+    input_size    = 1600 # (int): number of mapping layer inputs
+    epsilon       = 0.02 # (%): probability of any connection
+    w_max         = 10   # maximum weight
+    learning_rate = 0.40 # learning rate
 
     [layers.mapping.synapses.gaba] # parameters inhibitory synapses
-    input_size     = 800  # (int): number of inhibitory layer inputs
-    epsilon        = 0.02 # (%): probability of any connection
-    stdp.w_max     = 40   # maximum weight
-    stdp.eta_plus  = 0.99 # learning rate for weight increase
-    stdp.eta_minus = 0.99 # learning rate for weight increase
+    input_size    = 800  # (int): number of inhibitory layer inputs
+    epsilon       = 0.02 # (%): probability of any connection
+    w_max         = 40   # maximum weight
+    learning_rate = 0.80 # learning rate
 
 
 [layers.embedding] # parameters if the embedding cell
@@ -39,18 +37,16 @@ population = 800 # (int): size of embedding population
     v_reset     = -60.0 # (mv): reset potential 
 
     [layers.embedding.synapses.ampa] # parameters embedding synapses
-    input_size     = 1600 # (int): number of embedding layer inputs
-    epsilon        = 0.02 # (%): probability of any connection
-    stdp.w_max     = 10   # maximum weight
-    stdp.eta_plus  = 0.99 # learning rate for weight increase
-    stdp.eta_minus = 0.99 # learning rate for weight increase
+    input_size    = 1600 # (int): number of embedding layer inputs
+    epsilon       = 0.02 # (%): probability of any connection
+    w_max         = 10   # maximum weight
+    learning_rate = 0.40 # learning rate
 
     [layers.embedding.synapses.gaba] # parameters inhibitory synapses
-    input_size     = 800  # (int): number of inhibitory layer inputs
-    epsilon        = 0.02 # (%): probability of any connection
-    stdp.w_max     = 40   # maximum weight
-    stdp.eta_plus  = 0.99 # learning rate for weight increase
-    stdp.eta_minus = 0.99 # learning rate for weight increase
+    input_size    = 800  # (int): number of inhibitory layer inputs
+    epsilon       = 0.02 # (%): probability of any connection
+    w_max         = 40   # maximum weight
+    learning_rate = 0.80 # learning rate
 
 
 [layers.inhibitory] # parameters if the mapping cell
@@ -65,15 +61,13 @@ population = 800 # (int): size of inhibitory population
     v_reset     = -60.0 # (mv): reset potential 
 
     [layers.inhibitory.synapses.ampa] # parameters mapping synapses
-    input_size     = 1600 # (int): number of mapping layer inputs
-    epsilon        = 0.02 # (%): probability of any connection
-    stdp.w_max     = 10   # maximum weight
-    stdp.eta_plus  = 0.99 # learning rate for weight increase
-    stdp.eta_minus = 0.99 # learning rate for weight increase
+    input_size    = 1600 # (int): number of mapping layer inputs
+    epsilon       = 0.02 # (%): probability of any connection
+    w_max         = 10   # maximum weight
+    learning_rate = 0.40 # learning rate
 
     [layers.inhibitory.synapses.gaba] # parameters inhibitory synapses
-    input_size     = 800  # (int): number of inhibitory layer inputs
-    epsilon        = 0.02 # (%): probability of any connection
-    stdp.w_max     = 40   # maximum weight
-    stdp.eta_plus  = 0.99 # learning rate for weight increase
-    stdp.eta_minus = 0.99 # learning rate for weight increase
+    input_size    = 800  # (int): number of inhibitory layer inputs
+    epsilon       = 0.02 # (%): probability of any connection
+    w_max         = 40   # maximum weight
+    learning_rate = 0.80 # learning rate
