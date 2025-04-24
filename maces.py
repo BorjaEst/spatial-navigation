@@ -47,6 +47,35 @@ def free(mace):
     raise ValueError("No free point found in the mace.")
 
 
+def sensor(mace, position, decay=0.2):
+    """
+    Get the sensor readings from the mace at the agent's position.
+    The `position` is a boolean tensor of the same shape as `mace`,
+    where the agent's location (x, y) is marked as 1.
+
+    The sensor readings are calculated based on a Gaussian decay from the agent's position.
+    Walls (mace positions) have negative values, closer to -1 as they approach the agent's position.
+    """
+    # Find the agent's location
+    agent_location = torch.nonzero(position, as_tuple=True)
+
+    # Calculate distances from the agent's position using matrix operations
+    x_indices = torch.arange(mace.shape[0], dtype=torch.float32).unsqueeze(1).repeat(1, mace.shape[1])
+    y_indices = torch.arange(mace.shape[1], dtype=torch.float32).unsqueeze(0).repeat(mace.shape[0], 1)
+
+    agent_x, agent_y = agent_location[0].item(), agent_location[1].item()
+    distance_tensor = torch.sqrt((x_indices - agent_x) ** 2 + (y_indices - agent_y) ** 2)
+
+    # Apply Gaussian decay to the distances
+    gaussian_decay = torch.exp(-decay * distance_tensor)
+
+    # Set walls (mace positions) to negative values based on Gaussian decay
+    sensor_readings = gaussian_decay.clone()
+    sensor_readings[mace] = -gaussian_decay[mace]
+
+    return sensor_readings
+
+
 def near(mace, position):
     """
     Determine the areas near the agent's position on the mace.
