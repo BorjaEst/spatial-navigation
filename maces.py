@@ -15,8 +15,8 @@ def random(size, num_points):
     The points are evenly clustered to resemble a mace-like structure.
     """
     mace = torch.zeros(size, dtype=torch.bool)
-    num_clusters = max(1, num_points // 5)  # Define the number of clusters
-    cluster_radius = min(size) // 10  # Define a cluster radius based on the size
+    num_clusters = max(1, num_points // 10)  # Define the number of clusters
+    cluster_radius = min(size) // 20  # Define a cluster radius based on the size
 
     # Generate evenly spaced cluster centers
     cluster_centers = []
