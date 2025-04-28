@@ -16,12 +16,12 @@ population = 800 # (int): size of mapping population
     input_size    = 1600 # (int): number of mapping layer inputs
     epsilon       = 0.02 # (%): probability of any connection
     w_max         = 10   # maximum weight
-    learning_rate = 0.40 # learning rate
+    learning_rate = 0.20 # learning rate
 
     [layers.mapping.synapses.gaba] # parameters inhibitory synapses
     input_size    = 800  # (int): number of inhibitory layer inputs
-    epsilon       = 0.02 # (%): probability of any connection
-    w_max         = 40   # maximum weight
+    epsilon       = 0.20 # (%): probability of any connection
+    w_max         = 80   # maximum weight
     learning_rate = 0.80 # learning rate
 
 
@@ -40,12 +40,12 @@ population = 800 # (int): size of embedding population
     input_size    = 1600 # (int): number of embedding layer inputs
     epsilon       = 0.02 # (%): probability of any connection
     w_max         = 10   # maximum weight
-    learning_rate = 0.40 # learning rate
+    learning_rate = 0.20 # learning rate
 
     [layers.embedding.synapses.gaba] # parameters inhibitory synapses
     input_size    = 800  # (int): number of inhibitory layer inputs
-    epsilon       = 0.02 # (%): probability of any connection
-    w_max         = 40   # maximum weight
+    epsilon       = 0.20 # (%): probability of any connection
+    w_max         = 80   # maximum weight
     learning_rate = 0.80 # learning rate
 
 
@@ -64,10 +64,10 @@ population = 800 # (int): size of inhibitory population
     input_size    = 1600 # (int): number of mapping layer inputs
     epsilon       = 0.02 # (%): probability of any connection
     w_max         = 10   # maximum weight
-    learning_rate = 0.40 # learning rate
+    learning_rate = 0.80 # learning rate
 
     [layers.inhibitory.synapses.gaba] # parameters inhibitory synapses
     input_size    = 800  # (int): number of inhibitory layer inputs
     epsilon       = 0.02 # (%): probability of any connection
-    w_max         = 40   # maximum weight
+    w_max         = 80   # maximum weight
     learning_rate = 0.80 # learning rate
